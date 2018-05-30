@@ -81,19 +81,26 @@
                     <TextBlock Grid.Row="6">Simulations:</TextBlock>
 
                     <TextBox Grid.Row="0" Grid.Column="1"
-                             x:Name="txtInitialPrice" Text="30.0"/>
+                             x:Name="txtInitialPrice"
+                             Text="{Binding InitialPrice, StringFormat=0.0}"/>
                     <TextBox Grid.Row="1" Grid.Column="1"
-                             x:Name="txtExercisePrice" Text="30.0"/>
+                             x:Name="txtExercisePrice"
+                             Text="{Binding ExercisePrice, StringFormat=0.0}"/>
                     <TextBox Grid.Row="2" Grid.Column="1"
-                             x:Name="txtUpGrowth" Text="1.4"/>
+                             x:Name="txtUpGrowth"
+                             Text="{Binding UpGrowth, StringFormat=0.0}"/>
                     <TextBox Grid.Row="3" Grid.Column="1"
-                             x:Name="txtDownGrowth" Text="0.8"/>
+                             x:Name="txtDownGrowth"
+                             Text="{Binding DownGrowth, StringFormat=0.0}"/>
                     <TextBox Grid.Row="4" Grid.Column="1"
-                             x:Name="txtInterestRate" Text="1.08"/>
+                             x:Name="txtInterestRate"
+                             Text="{Binding InterestRate, StringFormat=0.00}"/>
                     <TextBox Grid.Row="5" Grid.Column="1"
-                             x:Name="txtPeriods" Text="30"/>
+                             x:Name="txtPeriods"
+                             Text="{Binding Periods}"/>
                     <TextBox Grid.Row="6" Grid.Column="1"
-                             x:Name="txtSimulations" Text="5000000"/>
+                             x:Name="txtSimulations"
+                             Text="{Binding Simulations}"/>
                 </Grid>
             </Expander>
         </Grid>

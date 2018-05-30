@@ -14,7 +14,7 @@ namespace AsianOptions
         /// </summary>
         /// <param name="rand">Random number generator</param>
         /// <param name="initial">Initial price</param>
-        /// <param name="exercise">Excercise price</param>
+        /// <param name="exercise">Exercise price</param>
         /// <param name="up">Up growth</param>
         /// <param name="down">Down growth</param>
         /// <param name="interest">Interest rate</param>

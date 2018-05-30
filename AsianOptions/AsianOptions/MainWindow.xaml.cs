@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsianOptions.ViewModel;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Windows;
@@ -10,10 +11,15 @@ namespace AsianOptions
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel _viewModel;
+
         //TODO create a view model for this view.
-        public MainWindow()
+        public MainWindow(MainWindowViewModel viewModel)
         {
             InitializeComponent();
+
+            _viewModel = viewModel;
+            DataContext = _viewModel;
 
             mnuFileSave.Click += mnuFileSave_Click;
             mnuFileExit.Click += mnuFileExit_Click;
@@ -54,13 +60,13 @@ namespace AsianOptions
             spinnerWait.Visibility = Visibility.Visible;
             spinnerWait.Spin = true;
 
-            double initial = Convert.ToDouble(txtInitialPrice.Text);
-            double exercise = Convert.ToDouble(txtExercisePrice.Text);
-            double up = Convert.ToDouble(txtUpGrowth.Text);
-            double down = Convert.ToDouble(txtDownGrowth.Text);
-            double interest = Convert.ToDouble(txtInterestRate.Text);
-            long periods = Convert.ToInt64(txtPeriods.Text);
-            long sims = Convert.ToInt64(txtSimulations.Text);
+            double initial = _viewModel.InitialPrice;
+            double exercise = _viewModel.ExercisePrice;
+            double up = _viewModel.UpGrowth;
+            double down = _viewModel.DownGrowth;
+            double interest = _viewModel.InterestRate;
+            long periods = _viewModel.Periods;
+            long sims = _viewModel.Simulations;
 
             //
             // Run simulation to price options:
@@ -75,6 +81,8 @@ namespace AsianOptions
 
             double elapsedTimeInSecs = (stop - start) / 1000.0;
 
+            // Standard Numeric Format Strings
+            // https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#example
             var ci = new CultureInfo("en");
             var result = $"{price.ToString("C", ci)} [{elapsedTimeInSecs:#,##0.00} secs]";
 
