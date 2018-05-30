@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 
@@ -74,7 +75,8 @@ namespace AsianOptions
 
             double elapsedTimeInSecs = (stop - start) / 1000.0;
 
-            var result = $"{price:C2} [{elapsedTimeInSecs:#,##0.00} secs]";
+            var ci = new CultureInfo("en");
+            var result = $"{price.ToString("C", ci)} [{elapsedTimeInSecs:#,##0.00} secs]";
 
             //
             // Display the results:
