@@ -13,7 +13,6 @@ namespace AsianOptions
     {
         private MainWindowViewModel _viewModel;
 
-        //TODO create a view model for this view.
         public MainWindow(MainWindowViewModel viewModel)
         {
             InitializeComponent();
