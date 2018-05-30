@@ -118,42 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MainWindow_DownGrowth" xml:space="preserve">
-    <value>Down growth</value>
+    <value>下降成長</value>
   </data>
   <data name="MainWindow_ExercisePrice" xml:space="preserve">
-    <value>Exercise price</value>
+    <value>行動価値</value>
   </data>
   <data name="MainWindow_Exit" xml:space="preserve">
-    <value>E_xit</value>
+    <value>終了</value>
   </data>
   <data name="MainWindow_File" xml:space="preserve">
-    <value>_File</value>
+    <value>ファイル</value>
   </data>
   <data name="MainWindow_InitialPrice" xml:space="preserve">
-    <value>Initial price</value>
+    <value>初期価格</value>
   </data>
   <data name="MainWindow_InterestRate" xml:space="preserve">
-    <value>Interest rate</value>
+    <value>利益率</value>
   </data>
   <data name="MainWindow_Periods" xml:space="preserve">
-    <value>Periods</value>
+    <value>計算時間長</value>
   </data>
   <data name="MainWindow_PriceOption" xml:space="preserve">
-    <value>Price Option</value>
+    <value>オプション価格</value>
   </data>
   <data name="MainWindow_SaveResults" xml:space="preserve">
-    <value>_Save Results</value>
+    <value>結果の保存</value>
   </data>
   <data name="MainWindow_SimulationParameters" xml:space="preserve">
-    <value>Simulation Parameters</value>
+    <value>シミュレーション変数</value>
   </data>
   <data name="MainWindow_Simulations" xml:space="preserve">
-    <value>Simulations</value>
+    <value>シミュレーション回数</value>
   </data>
   <data name="MainWindow_Title" xml:space="preserve">
     <value>Asian Options Pricing Simulation (sequential)</value>
   </data>
   <data name="MainWindow_UpGrowth" xml:space="preserve">
-    <value>Up growth</value>
+    <value>上昇成長</value>
   </data>
 </root>

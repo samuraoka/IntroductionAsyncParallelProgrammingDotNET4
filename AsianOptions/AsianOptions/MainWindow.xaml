@@ -3,9 +3,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resx="clr-namespace:AsianOptions.Properties"
         xmlns:fenestra="clr-namespace:Fenestra;assembly=Fenestra"
         mc:Ignorable="d"
-        Title="Asian Options Pricing Simulation (sequential)"
+        Title="{x:Static resx:Resources.MainWindow_Title}"
         Height="380" Width="560" FontSize="14" ResizeMode="CanMinimize"
         Left="20" Top="20" Background="LightSkyBlue">
     <StackPanel>
@@ -14,10 +15,13 @@
             <Menu.BitmapEffect>
                 <DropShadowBitmapEffect/>
             </Menu.BitmapEffect>
-            <MenuItem x:Name="mnuFile" Header="_File" Background="LightGreen">
-                <MenuItem x:Name="mnuFileSave" Header="_Save Results"/>
+            <MenuItem x:Name="mnuFile" Background="LightGreen"
+                      Header="{x:Static resx:Resources.MainWindow_File}">
+                <MenuItem x:Name="mnuFileSave"
+                          Header="{x:Static resx:Resources.MainWindow_SaveResults}"/>
                 <Separator/>
-                <MenuItem x:Name="mnuFileExit" Header="E_xit"/>
+                <MenuItem x:Name="mnuFileExit"
+                          Header="{x:Static resx:Resources.MainWindow_Exit}"/>
             </MenuItem>
         </Menu>
         <Grid Margin="24">
@@ -29,9 +33,13 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center">
-                    <Button x:Name="cmdPriceOption" Content="Price Option..."
+                    <Button x:Name="cmdPriceOption"
                             Padding="0,6" Width="150" Margin="0,12,0,10"
-                            FontSize="14"/>
+                            FontSize="14">
+                        <TextBlock>
+                            <Run Text="{x:Static resx:Resources.MainWindow_PriceOption}"/>...
+                        </TextBlock>
+                    </Button>
                     <fenestra:BizzySpinner x:Name="spinnerWait"
                                            Visibility="Collapsed"
                                            Width="36" Margin="12,12,0,10"/>
@@ -43,7 +51,12 @@
             </StackPanel>
 
             <Expander Grid.Column="1" Background="White" Margin="60,0,0,0"
-                      Header="Simulation Parameters:" IsExpanded="True">
+                      IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Padding="5">
+                        <Run Text="{x:Static resx:Resources.MainWindow_SimulationParameters}"/>:
+                    </TextBlock>
+                </Expander.Header>
                 <Grid ShowGridLines="True" Background="Yellow" Margin="12">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -73,13 +86,27 @@
                     </Grid.Resources>
 
                     <!-- Grid Data -->
-                    <TextBlock Grid.Row="0">Initial price:</TextBlock>
-                    <TextBlock Grid.Row="1">Exercise price:</TextBlock>
-                    <TextBlock Grid.Row="2">Up growth:</TextBlock>
-                    <TextBlock Grid.Row="3">Down growth:</TextBlock>
-                    <TextBlock Grid.Row="4">Interest rate:</TextBlock>
-                    <TextBlock Grid.Row="5">Periods:</TextBlock>
-                    <TextBlock Grid.Row="6">Simulations:</TextBlock>
+                    <TextBlock Grid.Row="0">
+                        <Run Text="{x:Static resx:Resources.MainWindow_InitialPrice}"/>:
+                    </TextBlock>
+                    <TextBlock Grid.Row="1">
+                        <Run Text="{x:Static resx:Resources.MainWindow_ExercisePrice}"/>:
+                    </TextBlock>
+                    <TextBlock Grid.Row="2">
+                        <Run Text="{x:Static resx:Resources.MainWindow_UpGrowth}"/>:
+                    </TextBlock>
+                    <TextBlock Grid.Row="3">
+                        <Run Text="{x:Static resx:Resources.MainWindow_DownGrowth}"/>:
+                    </TextBlock>
+                    <TextBlock Grid.Row="4">
+                        <Run Text="{x:Static resx:Resources.MainWindow_InterestRate}"/>:
+                    </TextBlock>
+                    <TextBlock Grid.Row="5">
+                        <Run Text="{x:Static resx:Resources.MainWindow_Periods}"/>:
+                    </TextBlock>
+                    <TextBlock Grid.Row="6">
+                        <Run Text="{x:Static resx:Resources.MainWindow_Simulations}"/>:
+                    </TextBlock>
 
                     <TextBox Grid.Row="0" Grid.Column="1"
                              x:Name="txtInitialPrice"
