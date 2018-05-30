@@ -50,7 +50,8 @@ namespace AsianOptions
             //TODO create a command for this action.
             cmdPriceOption.IsEnabled = false;
 
-            //TODO spinner settings
+            spinnerWait.Visibility = Visibility.Visible;
+            spinnerWait.Spin = true;
 
             double initial = Convert.ToDouble(txtInitialPrice.Text);
             double exercise = Convert.ToDouble(txtExercisePrice.Text);
@@ -80,7 +81,8 @@ namespace AsianOptions
             //
             lstPrices.Items.Insert(0, result);
 
-            //TODO spinner settings
+            spinnerWait.Spin = false;
+            spinnerWait.Visibility = Visibility.Collapsed;
 
             cmdPriceOption.IsEnabled = true;
         }

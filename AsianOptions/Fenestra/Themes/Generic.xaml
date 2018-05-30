@@ -1,0 +1,12 @@
+﻿<!-- Copyright © Microsoft Corporation 2009
+     Distrubted under the Microsoft Permissive License 
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Fenestra;component/BizzySpinner.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+</ResourceDictionary>
+

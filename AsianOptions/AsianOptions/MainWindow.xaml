@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fenestra="clr-namespace:Fenestra;assembly=Fenestra"
         mc:Ignorable="d"
         Title="Asian Options Pricing Simulation (sequential)"
         Height="380" Width="560" FontSize="14" ResizeMode="CanMinimize"
@@ -31,7 +32,9 @@
                     <Button x:Name="cmdPriceOption" Content="Price Option..."
                             Padding="0,6" Width="150" Margin="0,12,0,10"
                             FontSize="14"/>
-                    <!--TODO add busy spinner here-->
+                    <fenestra:BizzySpinner x:Name="spinnerWait"
+                                           Visibility="Collapsed"
+                                           Width="36" Margin="12,12,0,10"/>
                 </StackPanel>
                 <ListBox x:Name="lstPrices" Height="160" FontSize="16"
                          FontWeight="SemiBold" Margin="0,10,0,0"
