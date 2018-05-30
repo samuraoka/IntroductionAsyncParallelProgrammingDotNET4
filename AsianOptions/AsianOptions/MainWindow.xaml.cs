@@ -89,7 +89,7 @@ namespace AsianOptions
             //
             // Display the results:
             //
-            lstPrices.Items.Insert(0, result);
+            _viewModel.Results.Insert(0, result);
 
             spinnerWait.Spin = false;
             spinnerWait.Visibility = Visibility.Collapsed;

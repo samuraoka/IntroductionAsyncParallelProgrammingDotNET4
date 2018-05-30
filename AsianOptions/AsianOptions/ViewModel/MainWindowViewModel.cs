@@ -1,4 +1,6 @@
-﻿namespace AsianOptions.ViewModel
+﻿using System.Collections.ObjectModel;
+
+namespace AsianOptions.ViewModel
 {
     public class MainWindowViewModel
     {
@@ -10,6 +12,8 @@
         public long Periods { get; set; }
         public long Simulations { get; set; }
 
+        public ObservableCollection<string> Results { get; private set; }
+
         public MainWindowViewModel()
         {
             InitialPrice = 30.0;
@@ -19,6 +23,8 @@
             InterestRate = 1.08;
             Periods = 30;
             Simulations = 5_000_000;
+
+            Results = new ObservableCollection<string>();
         }
     }
 }
