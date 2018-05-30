@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace AsianOptions
@@ -70,30 +71,39 @@ namespace AsianOptions
             //
             // Run simulation to price options:
             //
-            var rand = new Random(Guid.NewGuid().GetHashCode());
-            int start = Environment.TickCount;
+            string result = string.Empty;
+            var T = new Task(() =>
+            {
+                var rand = new Random(Guid.NewGuid().GetHashCode());
+                int start = Environment.TickCount;
 
-            double price = AsianOptionsPricing.Simulation(
+                double price = AsianOptionsPricing.Simulation(
                 rand, initial, exercise, up, down, interest, periods, sims);
 
-            int stop = Environment.TickCount;
+                int stop = Environment.TickCount;
 
-            double elapsedTimeInSecs = (stop - start) / 1000.0;
+                double elapsedTimeInSecs = (stop - start) / 1000.0;
 
-            // Standard Numeric Format Strings
-            // https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#example
-            var ci = new CultureInfo("en");
-            var result = $"{price.ToString("C", ci)} [{elapsedTimeInSecs:#,##0.00} secs]";
+                // Standard Numeric Format Strings
+                // https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#example
+                var ci = new CultureInfo("en");
+                result = $"{price.ToString("C", ci)} [{elapsedTimeInSecs:#,##0.00} secs]";
+            });
 
             //
             // Display the results:
             //
-            _viewModel.Results.Insert(0, result);
+            var T2 = T.ContinueWith((antecedent) =>
+            {
+                _viewModel.Results.Insert(0, result);
 
-            spinnerWait.Spin = false;
-            spinnerWait.Visibility = Visibility.Collapsed;
+                spinnerWait.Spin = false;
+                spinnerWait.Visibility = Visibility.Collapsed;
 
-            cmdPriceOption.IsEnabled = true;
+                cmdPriceOption.IsEnabled = true;
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            T.Start();
         }
     }
 }
