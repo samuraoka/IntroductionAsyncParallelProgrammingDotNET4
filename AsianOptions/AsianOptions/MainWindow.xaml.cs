@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 
 namespace AsianOptions
@@ -8,6 +9,7 @@ namespace AsianOptions
     /// </summary>
     public partial class MainWindow : Window
     {
+        //TODO create a view model for this view.
         public MainWindow()
         {
             InitializeComponent();
@@ -26,10 +28,18 @@ namespace AsianOptions
             Close();
         }
 
+        /// <summary>
+        /// Saves the contents of the list box.
+        /// </summary>
         private void mnuFileSave_Click(object sender, RoutedEventArgs e)
         {
-            //TODO
-            throw new NotImplementedException();
+            using (var file = new StreamWriter("results.txt"))
+            {
+                foreach (var item in lstPrices.Items)
+                {
+                    file.WriteLine(item);
+                }
+            }
         }
 
         /// <summary>
@@ -37,6 +47,7 @@ namespace AsianOptions
         /// </summary>
         private void cmdPriceOption_Click(object sender, RoutedEventArgs e)
         {
+            //TODO create a command for this action.
             cmdPriceOption.IsEnabled = false;
 
             //TODO spinner settings
