@@ -1,12 +1,98 @@
 ﻿<Window x:Class="AsianOptions.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AsianOptions"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Asian Options Pricing Simulation (sequential)"
+        Height="380" Width="560" FontSize="14" ResizeMode="CanMinimize"
+        Left="20" Top="20" Background="LightSkyBlue">
+    <StackPanel>
+        <Menu x:Name="mnuBar" Height="24" Background="LightGreen"
+              VerticalAlignment="Center">
+            <Menu.BitmapEffect>
+                <DropShadowBitmapEffect/>
+            </Menu.BitmapEffect>
+            <MenuItem x:Name="mnuFile" Header="_File" Background="LightGreen">
+                <MenuItem x:Name="mnuFileSave" Header="_Save Results"/>
+                <Separator/>
+                <MenuItem x:Name="mnuFileExit" Header="E_xit"/>
+            </MenuItem>
+        </Menu>
+        <Grid Margin="24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <Button x:Name="cmdPriceOption" Content="Price Option..."
+                            Padding="0,6" Width="150" Margin="0,12,0,10"
+                            FontSize="14"/>
+                    <!--TODO add busy spinner here-->
+                </StackPanel>
+                <ListBox x:Name="lstPrices" Height="160" FontSize="16"
+                         FontWeight="SemiBold" Margin="0,10,0,0"
+                         VerticalAlignment="Stretch"/>
+            </StackPanel>
+
+            <Expander Grid.Column="1" Background="White" Margin="60,0,0,0"
+                      Header="Simulation Parameters:" IsExpanded="True">
+                <Grid ShowGridLines="True" Background="Yellow" Margin="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Padding" Value="10,4"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Padding" Value="10,4"/>
+                            <Setter Property="VerticalAlignment"
+                                    Value="Center"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <!-- Grid Data -->
+                    <TextBlock Grid.Row="0">Initial price:</TextBlock>
+                    <TextBlock Grid.Row="1">Exercise price:</TextBlock>
+                    <TextBlock Grid.Row="2">Up growth:</TextBlock>
+                    <TextBlock Grid.Row="3">Down growth:</TextBlock>
+                    <TextBlock Grid.Row="4">Interest rate:</TextBlock>
+                    <TextBlock Grid.Row="5">Periods:</TextBlock>
+                    <TextBlock Grid.Row="6">Simulations:</TextBlock>
+
+                    <TextBox Grid.Row="0" Grid.Column="1"
+                             x:Name="txtInitialPrice" Text="30.0"/>
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             x:Name="txtExercisePrice" Text="30.0"/>
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             x:Name="txtUpGrowth" Text="1.4"/>
+                    <TextBox Grid.Row="3" Grid.Column="1"
+                             x:Name="txtDownGrowth" Text="0.8"/>
+                    <TextBox Grid.Row="4" Grid.Column="1"
+                             x:Name="txtInterestRate" Text="1.08"/>
+                    <TextBox Grid.Row="5" Grid.Column="1"
+                             x:Name="txtPeriods" Text="30"/>
+                    <TextBox Grid.Row="6" Grid.Column="1"
+                             x:Name="txtSimulations" Text="5000000"/>
+                </Grid>
+            </Expander>
+        </Grid>
+    </StackPanel>
 </Window>

@@ -1,17 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AsianOptions
 {
@@ -23,6 +11,30 @@ namespace AsianOptions
         public MainWindow()
         {
             InitializeComponent();
+
+            mnuFileSave.Click += mnuFileSave_Click;
+            mnuFileExit.Click += mnuFileExit_Click;
+            cmdPriceOption.Click += cmdPriceOption_Click;
+        }
+
+        //TODO
+
+        private void cmdPriceOption_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO
+            throw new NotImplementedException();
+        }
+
+        private void mnuFileExit_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO
+            throw new NotImplementedException();
+        }
+
+        private void mnuFileSave_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO
+            throw new NotImplementedException();
         }
     }
 }
