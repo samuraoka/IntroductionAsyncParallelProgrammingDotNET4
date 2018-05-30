@@ -26,11 +26,42 @@ namespace AsianOptions
             Random rand, double initial, double exercise,
             double up, double down, double interest, long periods, long sims)
         {
-            //TODO Risk-neutral probabilities:
+            // Risk-neutral probabilities:
+            double piup = (interest - down) / (up - down);
+            double pidown = 1 - piup;
 
             double sum = 0.0;
 
-            //TODO Run simulations:
+            // Run simulations:
+            for (int index = 0; index < sims; index += 1)
+            {
+                // Generate one path:
+                double sumPricePath = initial;
+                double previous = initial;
+                double next;
+
+                for (int i = 1; i <= periods; i += 1)
+                {
+                    double rn = rand.NextDouble();
+
+                    if (rn > pidown)
+                    {
+                        next = previous * up;
+                    }
+                    else
+                    {
+                        next = previous * down;
+                    }
+
+                    sumPricePath += next;
+                    previous = next;
+                }
+
+                double priceAverage = sumPricePath / (periods + 1);
+                double callPayOff = Math.Max(priceAverage - exercise, 0);
+
+                sum += callPayOff;
+            }
 
             // Return average across all simulations:
             return (sum / Math.Pow(interest, periods)) / sims;

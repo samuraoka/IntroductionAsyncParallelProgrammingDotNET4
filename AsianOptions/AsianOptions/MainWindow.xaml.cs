@@ -62,7 +62,7 @@ namespace AsianOptions
 
             double elapsedTimeInSecs = (stop - start) / 1000.0;
 
-            var result = $"{price:C} [{elapsedTimeInSecs:#,##0.00} secs]";
+            var result = $"{price:C2} [{elapsedTimeInSecs:#,##0.00} secs]";
 
             //
             // Display the results:
