@@ -13,6 +13,7 @@ namespace AsianOptions
     public partial class MainWindow : Window
     {
         private MainWindowViewModel _viewModel;
+        private int _taskCounter;
 
         public MainWindow(MainWindowViewModel viewModel)
         {
@@ -24,6 +25,8 @@ namespace AsianOptions
             mnuFileSave.Click += mnuFileSave_Click;
             mnuFileExit.Click += mnuFileExit_Click;
             cmdPriceOption.Click += cmdPriceOption_Click;
+
+            _taskCounter = 0;
         }
 
         /// <summary>
@@ -55,10 +58,15 @@ namespace AsianOptions
         private void cmdPriceOption_Click(object sender, RoutedEventArgs e)
         {
             //TODO create a command for this action.
-            cmdPriceOption.IsEnabled = false;
-
-            spinnerWait.Visibility = Visibility.Visible;
-            spinnerWait.Spin = true;
+            lock (this)
+            {
+                if (_taskCounter == 0)
+                {
+                    spinnerWait.Visibility = Visibility.Visible;
+                    spinnerWait.Spin = true;
+                }
+                _taskCounter += 1;
+            }
 
             double initial = _viewModel.InitialPrice;
             double exercise = _viewModel.ExercisePrice;
@@ -93,12 +101,17 @@ namespace AsianOptions
                 //
                 // Display the results:
                 //
-                _viewModel.Results.Insert(0, result);
+                lock (this)
+                {
+                    _viewModel.Results.Insert(0, result);
 
-                spinnerWait.Spin = false;
-                spinnerWait.Visibility = Visibility.Collapsed;
-
-                cmdPriceOption.IsEnabled = true;
+                    _taskCounter -= 1;
+                    if (_taskCounter == 0)
+                    {
+                        spinnerWait.Spin = false;
+                        spinnerWait.Visibility = Visibility.Collapsed;
+                    }
+                }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
