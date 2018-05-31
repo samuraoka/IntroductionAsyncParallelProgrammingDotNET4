@@ -11,7 +11,6 @@ namespace AsianOptions
     {
         internal struct Parameter
         {
-            public Random Random { get; set; }
             public double InitialPrice { get; set; }
             public double ExercisePrice { get; set; }
             public double UpGrowth { get; set; }
@@ -20,9 +19,8 @@ namespace AsianOptions
             public long Periods { get; set; }
             public long Simulations { get; set; }
 
-            public Parameter(Random rand, MainWindowViewModel viewModel)
+            public Parameter(MainWindowViewModel viewModel)
             {
-                Random = rand;
                 InitialPrice = viewModel.InitialPrice;
                 ExercisePrice = viewModel.ExercisePrice;
                 UpGrowth = viewModel.UpGrowth;
@@ -33,9 +31,9 @@ namespace AsianOptions
             }
         }
 
-        internal static double Simulation(Parameter param)
+        internal static double Simulation(Random rand, Parameter param)
         {
-            return Simulation(param.Random, param.InitialPrice, param.ExercisePrice,
+            return Simulation(rand, param.InitialPrice, param.ExercisePrice,
                 param.UpGrowth, param.DownGrowth, param.InterestRate, param.Periods, param.Simulations);
         }
 

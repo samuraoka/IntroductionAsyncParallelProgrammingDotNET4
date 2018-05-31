@@ -55,22 +55,27 @@ namespace AsianOptions
         private async void cmdPriceOption_Click(object sender, RoutedEventArgs e)
         {
             //TODO create a command for this action.
-            cmdPriceOption.IsEnabled = false;
-
-            spinnerWait.Visibility = Visibility.Visible;
-            spinnerWait.Spin = true;
-
-            var rand = new Random(Guid.NewGuid().GetHashCode());
-            var param = new AsianOptionsPricing.Parameter(rand, _viewModel);
+            AsianOptionsPricing.Parameter param;
+            lock (_viewModel)
+            {
+                if (_viewModel.TaskCounter == 0)
+                {
+                    spinnerWait.Visibility = Visibility.Visible;
+                    spinnerWait.Spin = true;
+                }
+                _viewModel.TaskCounter += 1;
+                param = new AsianOptionsPricing.Parameter(_viewModel);
+            }
 
             //
             // Run simulation to price options:
             //
             var result = await Task.Run(() =>
             {
+                var rand = new Random(Guid.NewGuid().GetHashCode());
                 int start = Environment.TickCount;
 
-                double price = AsianOptionsPricing.Simulation(param);
+                double price = AsianOptionsPricing.Simulation(rand, param);
 
                 int stop = Environment.TickCount;
 
@@ -85,12 +90,17 @@ namespace AsianOptions
             //
             // Display the results:
             //
-            _viewModel.Results.Insert(0, result);
+            lock (_viewModel)
+            {
+                _viewModel.Results.Insert(0, result);
 
-            spinnerWait.Spin = false;
-            spinnerWait.Visibility = Visibility.Collapsed;
-
-            cmdPriceOption.IsEnabled = true;
+                _viewModel.TaskCounter -= 1;
+                if (_viewModel.TaskCounter == 0)
+                {
+                    spinnerWait.Spin = false;
+                    spinnerWait.Visibility = Visibility.Collapsed;
+                }
+            }
         }
     }
 }

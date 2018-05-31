@@ -44,6 +44,8 @@
                                            Visibility="Collapsed"
                                            Width="36" Margin="12,12,0,10"/>
                 </StackPanel>
+                <TextBlock x:Name="taskCount" FontSize="16" Width="40"
+                           Text="{Binding TaskCounter}" TextAlignment="Center"/>
                 <ListBox x:Name="lstPrices" Height="160" FontSize="16"
                          FontWeight="SemiBold" Margin="0,10,0,0"
                          VerticalAlignment="Stretch"
