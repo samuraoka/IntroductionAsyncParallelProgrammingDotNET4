@@ -52,7 +52,7 @@ namespace AsianOptions
         /// <summary>
         /// Main button to run the simulation.
         /// </summary>
-        private void cmdPriceOption_Click(object sender, RoutedEventArgs e)
+        private async void cmdPriceOption_Click(object sender, RoutedEventArgs e)
         {
             //TODO create a command for this action.
             cmdPriceOption.IsEnabled = false;
@@ -60,25 +60,17 @@ namespace AsianOptions
             spinnerWait.Visibility = Visibility.Visible;
             spinnerWait.Spin = true;
 
-            double initial = _viewModel.InitialPrice;
-            double exercise = _viewModel.ExercisePrice;
-            double up = _viewModel.UpGrowth;
-            double down = _viewModel.DownGrowth;
-            double interest = _viewModel.InterestRate;
-            long periods = _viewModel.Periods;
-            long sims = _viewModel.Simulations;
+            var rand = new Random(Guid.NewGuid().GetHashCode());
+            var param = new AsianOptionsPricing.Parameter(rand, _viewModel);
 
-            string result = string.Empty;
-            Task.Factory.StartNew(() =>
+            //
+            // Run simulation to price options:
+            //
+            var result = await Task.Run(() =>
             {
-                //
-                // Run simulation to price options:
-                //
-                var rand = new Random(Guid.NewGuid().GetHashCode());
                 int start = Environment.TickCount;
 
-                double price = AsianOptionsPricing.Simulation(
-                rand, initial, exercise, up, down, interest, periods, sims);
+                double price = AsianOptionsPricing.Simulation(param);
 
                 int stop = Environment.TickCount;
 
@@ -87,19 +79,18 @@ namespace AsianOptions
                 // Standard Numeric Format Strings
                 // https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#example
                 var ci = new CultureInfo("en");
-                result = $"{price.ToString("C", ci)} [{elapsedTimeInSecs:#,##0.00} secs]";
-            }).ContinueWith((antecedent) =>
-            {
-                //
-                // Display the results:
-                //
-                _viewModel.Results.Insert(0, result);
+                return $"{price.ToString("C", ci)} [{elapsedTimeInSecs:#,##0.00} secs]";
+            });
 
-                spinnerWait.Spin = false;
-                spinnerWait.Visibility = Visibility.Collapsed;
+            //
+            // Display the results:
+            //
+            _viewModel.Results.Insert(0, result);
 
-                cmdPriceOption.IsEnabled = true;
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            spinnerWait.Spin = false;
+            spinnerWait.Visibility = Visibility.Collapsed;
+
+            cmdPriceOption.IsEnabled = true;
         }
     }
 }
