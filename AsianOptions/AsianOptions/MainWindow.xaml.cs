@@ -55,18 +55,14 @@ namespace AsianOptions
         private void cmdPriceOption_Click(object sender, RoutedEventArgs e)
         {
             //TODO create a command for this action.
-            AsianOptionsPricing.Parameter param;
-            lock (_viewModel)
+            if (_viewModel.TaskCounter == 0)
             {
-                if (_viewModel.TaskCounter == 0)
-                {
-                    spinnerWait.Visibility = Visibility.Visible;
-                    spinnerWait.Spin = true;
-                }
-                _viewModel.TaskCounter += 1;
-                param = new AsianOptionsPricing.Parameter(_viewModel);
+                spinnerWait.Visibility = Visibility.Visible;
+                spinnerWait.Spin = true;
             }
+            _viewModel.TaskCounter += 1;
 
+            var param = new AsianOptionsPricing.Parameter(_viewModel);
             string result = string.Empty;
             Task.Factory.StartNew(() =>
             {
@@ -91,16 +87,13 @@ namespace AsianOptions
                 //
                 // Display the results:
                 //
-                lock (_viewModel)
-                {
-                    _viewModel.Results.Insert(0, result);
+                _viewModel.Results.Insert(0, result);
 
-                    _viewModel.TaskCounter -= 1;
-                    if (_viewModel.TaskCounter == 0)
-                    {
-                        spinnerWait.Spin = false;
-                        spinnerWait.Visibility = Visibility.Collapsed;
-                    }
+                _viewModel.TaskCounter -= 1;
+                if (_viewModel.TaskCounter == 0)
+                {
+                    spinnerWait.Spin = false;
+                    spinnerWait.Visibility = Visibility.Collapsed;
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }

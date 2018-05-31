@@ -3,3 +3,4 @@ These are demo applications for the [Introduction to Async and Parallel Programm
 
 - [Task Parallel Library(TPL)](https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/task-parallel-library-tpl)
 - [Windows Presentation Foundation(WPF)](https://docs.microsoft.com/en-us/dotnet/framework/wpf/)
+- [BizzySpinner](https://foredecker.wordpress.com/2010/01/11/bizzyspinner-2-a-wpf-spinning-busy-state-indicator-with-source/)
