@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsianOptions.ViewModel;
+using System;
 
 namespace AsianOptions
 {
@@ -8,6 +9,34 @@ namespace AsianOptions
     /// </summary>
     internal class AsianOptionsPricing
     {
+        internal struct Parameter
+        {
+            public double InitialPrice { get; set; }
+            public double ExercisePrice { get; set; }
+            public double UpGrowth { get; set; }
+            public double DownGrowth { get; set; }
+            public double InterestRate { get; set; }
+            public long Periods { get; set; }
+            public long Simulations { get; set; }
+
+            public Parameter(MainWindowViewModel viewModel)
+            {
+                InitialPrice = viewModel.InitialPrice;
+                ExercisePrice = viewModel.ExercisePrice;
+                UpGrowth = viewModel.UpGrowth;
+                DownGrowth = viewModel.DownGrowth;
+                InterestRate = viewModel.InterestRate;
+                Periods = viewModel.Periods;
+                Simulations = viewModel.Simulations;
+            }
+        }
+
+        internal static double Simulation(Random rand, Parameter param)
+        {
+            return Simulation(rand, param.InitialPrice, param.ExercisePrice,
+                param.UpGrowth, param.DownGrowth, param.InterestRate, param.Periods, param.Simulations);
+        }
+
         /// <summary>
         /// Calculates the price of an option with the given statistical info.
         /// The algorithm used for calculation is the Monte Carlo method.

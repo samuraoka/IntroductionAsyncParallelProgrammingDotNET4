@@ -1,8 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace AsianOptions.ViewModel
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
         public double InitialPrice { get; set; }
         public double ExercisePrice { get; set; }
@@ -11,6 +12,18 @@ namespace AsianOptions.ViewModel
         public double InterestRate { get; set; }
         public long Periods { get; set; }
         public long Simulations { get; set; }
+
+        private int _taskCounter;
+        public int TaskCounter
+        {
+            get { return _taskCounter; }
+            set
+            {
+                _taskCounter = value;
+                PropertyChanged?.Invoke(this,
+                    new PropertyChangedEventArgs(nameof(TaskCounter)));
+            }
+        }
 
         public ObservableCollection<string> Results { get; private set; }
 
@@ -25,6 +38,10 @@ namespace AsianOptions.ViewModel
             Simulations = 5_000_000;
 
             Results = new ObservableCollection<string>();
+
+            TaskCounter = 0;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

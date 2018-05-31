@@ -13,7 +13,6 @@ namespace AsianOptions
     public partial class MainWindow : Window
     {
         private MainWindowViewModel _viewModel;
-        private int _taskCounter;
 
         public MainWindow(MainWindowViewModel viewModel)
         {
@@ -25,8 +24,6 @@ namespace AsianOptions
             mnuFileSave.Click += mnuFileSave_Click;
             mnuFileExit.Click += mnuFileExit_Click;
             cmdPriceOption.Click += cmdPriceOption_Click;
-
-            _taskCounter = 0;
         }
 
         /// <summary>
@@ -58,23 +55,17 @@ namespace AsianOptions
         private void cmdPriceOption_Click(object sender, RoutedEventArgs e)
         {
             //TODO create a command for this action.
-            lock (this)
+            AsianOptionsPricing.Parameter param;
+            lock (_viewModel)
             {
-                if (_taskCounter == 0)
+                if (_viewModel.TaskCounter == 0)
                 {
                     spinnerWait.Visibility = Visibility.Visible;
                     spinnerWait.Spin = true;
                 }
-                _taskCounter += 1;
+                _viewModel.TaskCounter += 1;
+                param = new AsianOptionsPricing.Parameter(_viewModel);
             }
-
-            double initial = _viewModel.InitialPrice;
-            double exercise = _viewModel.ExercisePrice;
-            double up = _viewModel.UpGrowth;
-            double down = _viewModel.DownGrowth;
-            double interest = _viewModel.InterestRate;
-            long periods = _viewModel.Periods;
-            long sims = _viewModel.Simulations;
 
             string result = string.Empty;
             Task.Factory.StartNew(() =>
@@ -85,8 +76,7 @@ namespace AsianOptions
                 var rand = new Random(Guid.NewGuid().GetHashCode());
                 int start = Environment.TickCount;
 
-                double price = AsianOptionsPricing.Simulation(
-                rand, initial, exercise, up, down, interest, periods, sims);
+                double price = AsianOptionsPricing.Simulation(rand, param);
 
                 int stop = Environment.TickCount;
 
@@ -101,12 +91,12 @@ namespace AsianOptions
                 //
                 // Display the results:
                 //
-                lock (this)
+                lock (_viewModel)
                 {
                     _viewModel.Results.Insert(0, result);
 
-                    _taskCounter -= 1;
-                    if (_taskCounter == 0)
+                    _viewModel.TaskCounter -= 1;
+                    if (_viewModel.TaskCounter == 0)
                     {
                         spinnerWait.Spin = false;
                         spinnerWait.Visibility = Visibility.Collapsed;
