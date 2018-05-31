@@ -68,12 +68,12 @@ namespace AsianOptions
             long periods = _viewModel.Periods;
             long sims = _viewModel.Simulations;
 
-            //
-            // Run simulation to price options:
-            //
             string result = string.Empty;
-            var T = new Task(() =>
+            Task.Factory.StartNew(() =>
             {
+                //
+                // Run simulation to price options:
+                //
                 var rand = new Random(Guid.NewGuid().GetHashCode());
                 int start = Environment.TickCount;
 
@@ -88,13 +88,11 @@ namespace AsianOptions
                 // https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#example
                 var ci = new CultureInfo("en");
                 result = $"{price.ToString("C", ci)} [{elapsedTimeInSecs:#,##0.00} secs]";
-            });
-
-            //
-            // Display the results:
-            //
-            var T2 = T.ContinueWith((antecedent) =>
+            }).ContinueWith((antecedent) =>
             {
+                //
+                // Display the results:
+                //
                 _viewModel.Results.Insert(0, result);
 
                 spinnerWait.Spin = false;
@@ -102,8 +100,6 @@ namespace AsianOptions
 
                 cmdPriceOption.IsEnabled = true;
             }, TaskScheduler.FromCurrentSynchronizationContext());
-
-            T.Start();
         }
     }
 }
